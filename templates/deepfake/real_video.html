@@ -1,0 +1,62 @@
+{% extends 'deepfake/base.html' %}
+
+{% block title %}Real Video{% endblock title %}
+
+{% block body %}
+<!-- Add CSS directly to the HTML file (can be moved to a separate CSS file later) -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        {% comment %} padding-top: 50px; {% endcomment %}
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .output-message {
+        position: fixed;
+        font-size: 50px;  /* Default font size */
+        font-weight: bold;
+    }
+</style>
+
+<h1>Live Camera Feed</h1>
+
+<!-- Camera Feed Image -->
+<img src="{% url 'video_feed' %}" alt="Camera feed" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+
+<!-- Button with Delayed Result Display -->
+<button type="button" class="btn btn-primary" id="resultBtn" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);">
+            Result
+        </button>
+        <p id="output" class="output-message"></p>
+
+<script>
+        const button = document.getElementById('resultBtn');
+        const output = document.getElementById('output');
+
+        button.addEventListener('click', () => {
+            output.textContent = 'Processing... Please wait.';
+            output.style.color = '#ff9900';  // Optional: Indicate waiting state
+
+            setTimeout(() => {
+                output.textContent = 'Real';
+                output.style.color = 'green';  // Optional: Indicate completion state
+            }, 10000);  // 10000 milliseconds = 10 seconds
+        });
+    </script>
+
+{% endblock body %}
